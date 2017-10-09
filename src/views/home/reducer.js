@@ -1,14 +1,14 @@
-export const defaultState = () => ({
-  stores: '',
+import createReducer from 'utils/createReducer';
+
+const defaultState = () => ({
+  banners: [],
 });
 
-export default (state = defaultState(), action = {}) => {
-  switch (action.type) {
-    case 'GET_STORES':
-      return {
-        stores: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const getBannersSuccess = (state, action) => ({
+  ...state,
+  banners: action.payload,
+});
+
+export default createReducer(defaultState, {
+  HOME_GET_BANNERS_SUCCESS: getBannersSuccess,
+});

@@ -5,13 +5,13 @@ import './style.scss';
 
 class Home extends Component {
   componentDidMount() {
-    this.props.getStores();
+    this.props.getBanners();
   }
 
   render() {
     return (
       <div className="home">
-        {this.props.stores}
+        Home
       </div>
     );
   }
@@ -20,12 +20,12 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   const home = state.home;
   return {
-    stores: home.stores,
+    banners: home.banners,
   };
 };
 
 const mapDispatchToProps = {
-  getStores: action.getStores,
+  getBanners: action.getBanners,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

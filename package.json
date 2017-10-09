@@ -20,6 +20,7 @@
     "babel-core": "^6.25.0",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",
+    "babel-plugin-module-resolver": "^2.7.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
@@ -45,8 +46,10 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "classnames": "^2.2.5",
     "history": "^4.6.3",
+    "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -54,6 +57,7 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "next",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "superagent": "^3.5.2"
   }

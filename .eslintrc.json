@@ -11,7 +11,9 @@
     "jsx-a11y/href-no-hash": "off",
     "react/prop-types": [1, { "ignore": ["children"] }],
     "react/prefer-stateless-function": 1,
-    "import/extensions": [1, { "js": "never", "json": "never" }]
+    "import/extensions": [1, { "js": "never", "json": "never" }],
+    "import/no-unresolved": [2, { "ignore": [ "utils/" ] }],
+    "import/no-extraneous-dependencies": [1]
   },
   "globals": {
     "document": true,

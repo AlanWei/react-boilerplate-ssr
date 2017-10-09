@@ -1,7 +1,7 @@
 {
   "sourceMaps": true,
   "presets": [
-    ["es2015", { "loose": true }],
+    ["es2015", { "modules": false }],
     "react"
   ],
   "plugins": [
@@ -10,12 +10,5 @@
     ["module-resolver", {
       "root": ["./src"]
     }]
-  ],
-  "env": {
-    "development": {
-      "plugins": [
-        "transform-react-jsx-source"
-      ]
-    }
-  }
+  ]
 }

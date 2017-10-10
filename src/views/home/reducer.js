@@ -1,14 +1,14 @@
 import createReducer from 'utils/createReducer';
 
 const defaultState = () => ({
-  banners: [],
+  topics: [],
 });
 
-const getBannersSuccess = (state, action) => ({
+const getTopicsSuccess = (state, action) => ({
   ...state,
-  banners: action.payload,
+  topics: action.payload,
 });
 
 export default createReducer(defaultState, {
-  HOME_GET_BANNERS_SUCCESS: getBannersSuccess,
+  HOME_GET_BANNERS_SUCCESS: getTopicsSuccess,
 });

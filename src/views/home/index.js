@@ -1,31 +1,42 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import map from 'lodash/map';
 import action from './action';
 import './style.scss';
 
+const propTypes = {
+  getTopics: PropTypes.func.isRequired,
+  topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 class Home extends Component {
   componentDidMount() {
-    this.props.getBanners();
+    this.props.getTopics();
   }
+
+  renderTopics = () => (
+    map(this.props.topics, topic => (
+      <div key={topic.id}>{topic.title}</div>
+    ))
+  );
 
   render() {
     return (
       <div className="home">
-        Home
+        {this.renderTopics()}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  const home = state.home;
-  return {
-    banners: home.banners,
-  };
-};
+const mapStateToProps = state => ({
+  topics: state.home.topics,
+});
 
 const mapDispatchToProps = {
-  getBanners: action.getBanners,
+  getTopics: action.getTopics,
 };
 
+Home.propTypes = propTypes;
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

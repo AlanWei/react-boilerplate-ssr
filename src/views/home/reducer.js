@@ -10,5 +10,5 @@ const getTopicsSuccess = (state, action) => ({
 });
 
 export default createReducer(defaultState, {
-  HOME_GET_BANNERS_SUCCESS: getTopicsSuccess,
+  HOME_GET_TOPICS_SUCCESS: getTopicsSuccess,
 });

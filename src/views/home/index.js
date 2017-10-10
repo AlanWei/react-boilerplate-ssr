@@ -17,7 +17,12 @@ class Home extends Component {
 
   renderTopics = () => (
     map(this.props.topics, topic => (
-      <div key={topic.id}>{topic.title}</div>
+      <div
+        key={topic.id}
+        className="topic"
+      >
+        {topic.title}
+      </div>
     ))
   );
 

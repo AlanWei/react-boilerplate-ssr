@@ -6,13 +6,13 @@ import action from './action';
 import './style.scss';
 
 const propTypes = {
-  getTopics: PropTypes.func.isRequired,
+  getUserArticles: PropTypes.func.isRequired,
   topics: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 class Home extends Component {
   componentDidMount() {
-    this.props.getTopics();
+    this.props.getUserArticles(1);
   }
 
   renderTopics = () => (
@@ -28,9 +28,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="home">
-        {this.renderTopics()}
-      </div>
+      <div className="home" />
     );
   }
 }
@@ -41,6 +39,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getTopics: action.getTopics,
+  getUser: action.getUser,
+  getUserArticles: action.getUserArticles,
 };
 
 Home.propTypes = propTypes;

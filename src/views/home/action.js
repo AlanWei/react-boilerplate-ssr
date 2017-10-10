@@ -17,14 +17,14 @@ function getUser(id) {
             name: 'Alan',
             age: 24,
           });
-        }, 250);
+        }, 1000);
       } else {
         setTimeout(() => {
           reject({
             error: true,
             message: 'wrong user id',
           });
-        }, 250);
+        }, 1000);
       }
     })
   ));
@@ -40,14 +40,14 @@ function getArticles(user) {
           }, {
             title: 'article 2',
           }]);
-        }, 250);
+        }, 1000);
       } else {
         setTimeout(() => {
           reject({
             error: true,
             message: 'user need to be at least 18',
           });
-        }, 250);
+        }, 1000);
       }
     })
   ));
@@ -59,7 +59,9 @@ function getUserArticles(id) {
     callback: getArticles,
   }, {
     status: 'error',
-    callback: () => {},
+    callback: payload => (() => {
+      console.log(payload);
+    }),
   }];
 
   return createChainedAsyncAction(getUser(id), handlers);

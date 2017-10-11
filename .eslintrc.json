@@ -12,7 +12,7 @@
     "react/prop-types": [1, { "ignore": ["children"] }],
     "react/prefer-stateless-function": 1,
     "import/extensions": [1, { "js": "never", "json": "never" }],
-    "import/no-unresolved": [2, { "ignore": [ "utils/" ] }],
+    "import/no-unresolved": [2, { "ignore": [ "utils/", "app/" ] }],
     "import/no-extraneous-dependencies": [0]
   },
   "globals": {

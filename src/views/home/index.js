@@ -41,6 +41,7 @@ const mapDispatchToProps = {
   getTopics: action.getTopics,
   getUser: action.getUser,
   getUserArticles: action.getUserArticles,
+  getUserSpecficArtile: action.getUserSpecficArtile,
 };
 
 Home.propTypes = propTypes;

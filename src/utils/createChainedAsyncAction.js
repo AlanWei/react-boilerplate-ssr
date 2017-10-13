@@ -1,12 +1,12 @@
 import isArray from 'lodash/isArray';
 
-function createChainedAsyncAction(first, handlers) {
+function createChainedAsyncAction(firstAction, handlers) {
   if (!isArray(handlers)) {
     throw new Error('[createChainedAsyncAction] handlers should be an array');
   }
 
   return dispatch => (
-    first(dispatch)
+    firstAction(dispatch)
       .then((resultAction) => {
         for (let i = 0; i < handlers.length; i += 1) {
           const { status, callback } = handlers[i];

@@ -53,6 +53,19 @@ function getArticles(user) {
   ));
 }
 
+function getArticle(id) {
+  return createAsyncAction('HOME_GET_ARTICLE', () => (
+    new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          id,
+          content: 'abc',
+        });
+      }, 1000);
+    })
+  ));
+}
+
 function getUserArticles(id) {
   const handlers = [{
     status: 'success',
@@ -67,8 +80,91 @@ function getUserArticles(id) {
   return createChainedAsyncAction(getUser(id), handlers);
 }
 
+function getUserSpecficArtile(userId, articleId) {
+  const firstAction = getUserArticles(userId);
+  const callbackAction = getArticle(articleId);
+
+  const handlers = [{
+    status: 'success',
+    callback: callbackAction,
+  }, {
+    status: 'error',
+    callback: () => (() => {}),
+  }];
+
+  console.log(firstAction);
+
+  // return createChainedAsyncAction(firstAction, handlers);
+}
+
+function loginWithFacebook(facebookId, facebookToken) {
+  return createAsyncAction('APP_LOGIN_WITH_FACEBOOK', () => (
+    api.post('/auth/facebook', {
+      facebook_id: facebookId,
+      facebook_token: facebookToken,
+    })
+  ));
+}
+
+function signupWithFacebook(facebookId, facebookToken, facebookEmail) {
+  return createAsyncAction('APP_SIGNUP_WITH_FACEBOOK', () => (
+    api.post('/accounts', {
+      authentication_type: 'facebook',
+      facebook_id: facebookId,
+      facebook_token: facebookToken,
+      email: facebookEmail,
+    })
+  ));
+}
+
+function connectWithFacebook(facebookId, facebookToken, facebookEmail) {
+  const firstAction = loginWithFacebook(facebookId, facebookToken);
+  const callbackAction = signupWithFacebook(facebookId, facebookToken, facebookEmail);
+
+  const handlers = [{
+    status: 'success',
+    callback: () => (() => {}), // 用户登陆成功
+  }, {
+    status: 'error',
+    callback: callbackAction, // 使用 facebook 账户登陆失败，尝试帮用户注册新账户
+  }];
+
+  return createChainedAsyncAction(firstAction, handlers);
+}
+
+const redirectToPage = (dispatch, page) => {
+  const redirectUrl = get(page, 'payload.data.redirectUrl');
+
+  return {
+    type: 'REDIRECT_USER',
+    payload: redirectUrl,
+  }
+}
+
+function redirectUser(id, systemInfo) {
+  const query = {
+    userId: id,
+    browserName: systemInfo.browserName || '',
+    browserPlatform: systemInfo.browserPlatform || '',
+    browserVersion: systemInfo.browserVersion || '',
+    ipAddress: systemInfo.ip || '',
+    mobileDevice: systemInfo.uaString || '',
+  };
+
+  const action = createAsyncAction('GET_REDIRECT_URL', () => (
+    api.get('/user', query)
+  ));
+
+  return createAsyncSideEffect('success', action, [
+    redirectToPage,
+    ... // 数组中的同步 action 将顺序执行
+  ]);
+}
+
 export default {
   getTopics,
   getUser,
   getUserArticles,
+  connectWithFacebook,
+  getUserSpecficArtile,
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import action from './action';
 import './style.scss';
 
 const propTypes = {
@@ -14,7 +15,9 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="home" />
+      <div className="home">
+        Home
+      </div>
     );
   }
 }
@@ -24,6 +27,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+  getTopics: action.getTopics,
 };
 
 Home.propTypes = propTypes;

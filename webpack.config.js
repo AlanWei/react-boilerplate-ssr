@@ -26,6 +26,7 @@ module.exports = {
     publicPath: '/',
     libraryTarget: 'umd',
     filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[id].app.[chunkhash:8].js',
   },
 
   module: {

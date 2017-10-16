@@ -12,13 +12,20 @@ const ENV = process.env.NODE_ENV || 'development';
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
-    app: './index.js',
+    vendor: [
+      'react',
+      'react-dom',
+      'react-redux',
+      'reselect',
+    ],
+    client: './index.js',
   },
 
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/',
-    filename: 'app.[hash].js',
+    libraryTarget: 'umd',
+    filename: '[name].[chunkhash:8].js',
   },
 
   module: {
@@ -93,6 +100,10 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './index.ejs',
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.[hash:8].js',
     }),
   ]).concat(ENV === 'production' ? [
     new webpack.optimize.OccurrenceOrderPlugin(),

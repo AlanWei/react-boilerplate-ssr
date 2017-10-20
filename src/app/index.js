@@ -8,7 +8,7 @@ import history from './history';
 import '../styles/index.scss';
 
 const Loading = () => (
-  <div>Loading</div>
+  'Loading'
 );
 
 const AsyncHome = loadable({

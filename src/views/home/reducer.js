@@ -1,12 +1,14 @@
 import createReducer from 'utils/createReducer';
 
 const defaultState = () => ({
+  users: [],
   topics: [],
 });
 
 const getTopicsSuccess = (state, action) => ({
   ...state,
-  topics: action.payload,
+  users: action.payload.data.users,
+  topics: action.payload.data.topics,
 });
 
 export default createReducer(defaultState, {

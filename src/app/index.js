@@ -16,8 +16,8 @@ const AsyncHome = loadable({
   loading: Loading,
 });
 
-const AsyncAllStores = loadable({
-  loader: () => import('../views/allStores'),
+const AsyncAnswers = loadable({
+  loader: () => import('../views/answers'),
   loading: Loading,
 });
 
@@ -26,7 +26,7 @@ const App = () => (
     <ConnectedRouter history={history}>
       <div>
         <Route exact path="/" component={AsyncHome} />
-        <Route path="/all-stores" component={AsyncAllStores} />
+        <Route path="/answers" component={AsyncAnswers} />
       </div>
     </ConnectedRouter>
   </Provider>

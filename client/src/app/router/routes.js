@@ -5,12 +5,12 @@ const Loading = () => (
 );
 
 const AsyncHome = loadable({
-  loader: () => import('../views/home'),
+  loader: () => import('../../views/home'),
   loading: Loading,
 });
 
 const AsyncAnswers = loadable({
-  loader: () => import('../views/answers'),
+  loader: () => import('../../views/answers'),
   loading: Loading,
 });
 

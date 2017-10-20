@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --colors",
     "start": "npm run build && serve build -s -c 1",
+    "start:direct": "serve build -s -c 1",
     "build": "rm -rf build/ && rm -rf stats/ && cross-env NODE_ENV=production webpack -p --progress",
     "prebuild": "npm run lint",
     "lint": "eslint src"

@@ -4,12 +4,17 @@
   "description": "SSR services with React 16.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "babel-watch src/index.js"
   },
   "author": "Alan Wei",
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.2",
     "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-watch": "^2.0.7"
   }
 }

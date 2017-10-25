@@ -12,8 +12,13 @@ const middlewares = [
   reduxThunk,
 ];
 
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+let composeEnhancers = compose;
+
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line no-underscore-dangle
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
+
 const store = createStore(
   combineReducers({
     ...reducers,

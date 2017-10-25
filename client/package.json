@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --colors",
+    "dev:server": "cross-env BUILD_TYPE=server webpack -p --progress --config ./webpack.config.js --watch",
     "start": "npm run build && serve build -s -c 1",
     "start:direct": "serve build -s -c 1",
     "build": "rm -rf build/ && rm -rf stats/ && npm-run-all --parallel build:client build:server",

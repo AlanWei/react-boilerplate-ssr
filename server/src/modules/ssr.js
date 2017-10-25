@@ -5,40 +5,40 @@
 // import get from 'lodash/get';
 // import last from 'lodash/last';
 // import split from 'lodash/split';
-// import { getClientInstance } from '../client';
+import { getClientInstance } from '../client';
 // import logger from '../logger';
 
 // Prepares the HTML string and the appropriate headers
 // and subequently string replaces them into their placeholders
-function renderToHtml(context) {
-  const appObject = context.client.app.init(context.store, context.initialComponent);
-  const appString = ReactDOM.renderToString(appObject);
-  const helmet = Helmet.renderStatic();
-  const initialState = JSON.stringify(context.store.getState()).replace(/</g, '\\u003c');
+// function renderToHtml(context) {
+//   const appObject = context.client.app.init(context.store, context.initialComponent);
+//   const appString = ReactDOM.renderToString(appObject);
+//   const helmet = Helmet.renderStatic();
+//   const initialState = JSON.stringify(context.store.getState()).replace(/</g, '\\u003c');
 
-  context.renderedHtml = context.client
-    .html()
-    .replace(/<!--appContent-->/g, appString)
-    .replace(/<!--appState-->/g, `<script>window.__INITIAL_STATE__ = ${initialState}</script>`)
-    .replace(/<\/head>/g, [
-      helmet.title.toString(),
-      helmet.meta.toString(),
-      helmet.link.toString(),
-      '</head>',
-    ].join('\n'))
-    .replace(/<html>/g, `<html ${helmet.htmlAttributes.toString()}>`)
-    .replace(/<body>/g, `<body ${helmet.bodyAttributes.toString()}>`);
+//   context.renderedHtml = context.client
+//     .html()
+//     .replace(/<!--appContent-->/g, appString)
+//     .replace(/<!--appState-->/g, `<script>window.__INITIAL_STATE__ = ${initialState}</script>`)
+//     .replace(/<\/head>/g, [
+//       helmet.title.toString(),
+//       helmet.meta.toString(),
+//       helmet.link.toString(),
+//       '</head>',
+//     ].join('\n'))
+//     .replace(/<html>/g, `<html ${helmet.htmlAttributes.toString()}>`)
+//     .replace(/<body>/g, `<body ${helmet.bodyAttributes.toString()}>`);
 
-  return context;
-}
+//   return context;
+// }
 
 // SSR Main method
 //
 // Note: Each function in the promise chain beyond the thenable context
 // should return the context or modified context.
 function serverRender(req, res) {
-  console.log(res.locals);
-  // const client = getClientInstance(res.locals.clientFolders);
+  const client = getClientInstance(res.locals.clientFolders);
+  console.log(client);
   // const {store, thunk} = configureStore(req, client);
 
   // Promise.resolve(null)

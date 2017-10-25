@@ -4,7 +4,7 @@
   "description": "SSR services with React 16.0",
   "main": "index.js",
   "scripts": {
-    "watch": "babel-watch src/index.js"
+    "watch": "CLIENT_VERSION=0.0.0 babel-watch src/index.js"
   },
   "author": "Alan Wei",
   "license": "MIT",

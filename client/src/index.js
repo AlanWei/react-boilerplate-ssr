@@ -1,5 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
+import { Provider } from 'react-redux';
+import store from 'app/store';
+import Router from 'app/router';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+import './styles/index.scss';
+
+const App = () => (
+  <Provider store={store}>
+    <Router />
+  </Provider>
+);
+
+ReactDOM.render(<App />, window.document.getElementById('app'));

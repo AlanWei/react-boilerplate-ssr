@@ -1,6 +1,6 @@
 {
   "name": "react-boilerplate-2017-ssr",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "SSR services with React 16.0",
   "main": "index.js",
   "scripts": {

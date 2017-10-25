@@ -1,23 +1,19 @@
 {
-  "name": "project-presto-client",
+  "name": "react-boilerplate-2017",
   "version": "0.0.0",
-  "description": "ShopBack Mobile Web Client",
-  "private": true,
+  "description": "React 16.0 boilerplate with SSR",
   "main": "src/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress --colors",
-    "dev:server": "cross-env BUILD_TYPE=server webpack -p --progress --config ./webpack.config.js --watch",
     "start": "npm run build && serve build -s -c 1",
-    "start:direct": "serve build -s -c 1",
-    "build": "rm -rf build/ && rm -rf stats/ && npm-run-all --parallel build:client build:server",
+    "dev:server": "cross-env NODE_ENV=development BUILD_TYPE=server webpack -p --progress --watch",
+    "build": "rm -rf build/ && npm-run-all --parallel build:client build:server",
     "build:client": "cross-env NODE_ENV=production BUILD_TYPE=client webpack -p --progress",
     "build:server": "cross-env NODE_ENV=production BUILD_TYPE=server webpack -p --progress",
     "lint": "eslint src"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shopback/project-presto.git"
-  },
+  "author": "Alan Wei",
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",

@@ -1,32 +1,54 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const PostCompile = require('post-compile-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const ReplacePlugin = require('replace-bundle-webpack-plugin');
-const Visualizer = require('webpack-visualizer-plugin');
-
 const path = require('path');
+const rimraf = require('rimraf');
+const pkg = require('./package.json');
 
 const ENV = process.env.NODE_ENV || 'development';
+const BUILD_TYPE = process.env.BUILD_TYPE || 'client';
+const IS_SERVER = BUILD_TYPE === 'server';
+const VERSION = pkg.version;
+
+const SOURCE_DIR = path.resolve(__dirname, 'src');
+const OUTPUT_DIR = path.resolve(__dirname, 'build');
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
-  entry: {
-    vendor: [
-      'react',
-      'react-dom',
-      'react-redux',
-      'reselect',
-    ],
-    client: './index.js',
-  },
+  context: SOURCE_DIR,
+  entry: (() => {
+    if (IS_SERVER) {
+      return {
+        server: './app/index.js',
+      };
+    }
+
+    return {
+      vendor: [
+        'react',
+        'react-dom',
+        'classnames',
+        'prop-types',
+        'redux',
+        'react-redux',
+        'redux-thunk',
+        'reselect',
+      ],
+      client: './index.js',
+    };
+  })(),
 
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: IS_SERVER ?
+      path.join(OUTPUT_DIR, VERSION, 'server')
+      :
+      path.join(OUTPUT_DIR, VERSION),
     publicPath: '/',
-    libraryTarget: 'umd',
-    filename: '[name].[chunkhash:8].js',
-    chunkFilename: '[id].app.[chunkhash:8].js',
+    libraryTarget: IS_SERVER ? 'commonjs2' : 'umd',
+    filename: 'assets/[name].[chunkhash:8].js',
+    chunkFilename: 'assets/[id].[name].[chunkhash:8].js',
   },
 
   module: {
@@ -35,11 +57,14 @@ module.exports = {
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
+        options: {
+          plugins: IS_SERVER ? ['dynamic-import-webpack', 'remove-webpack'] : [],
+        },
       },
     }, {
       test: /\.(scss|css)$/,
       include: [
-        path.resolve(__dirname, 'src'),
+        SOURCE_DIR,
       ],
       use: ExtractTextPlugin.extract({
         fallback: {
@@ -74,6 +99,10 @@ module.exports = {
       test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
       use: ENV === 'production' ? {
         loader: 'file-loader?name=[path][name]_[hash].[ext]',
+        options: {
+          name: '[hash:8].[ext]',
+          outputPath: 'assets/images/',
+        },
       } : {
         loader: 'url-loader',
       },
@@ -89,51 +118,39 @@ module.exports = {
     alias: {},
   },
 
-  plugins: ([
+  plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin({
-      filename: 'style.[hash].css',
+      filename: 'assets/css/style.[hash].css',
       allChunks: true,
       disable: ENV !== 'production',
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
+      'process.env.BUILD_TYPE': JSON.stringify(BUILD_TYPE),
+      'process.env.IS_SERVER': JSON.stringify(IS_SERVER),
     }),
+    new ManifestPlugin(),
+  ].concat(!IS_SERVER ? [] : [
+  // Server-only plugins
+    new PostCompile(() => {
+      rimraf.sync(path.join(OUTPUT_DIR, 'assets', 'css'));
+      rimraf.sync(path.join(OUTPUT_DIR, 'assets', 'images'));
+    }),
+  // Client-only plugins
+  ]).concat(IS_SERVER ? [] : [
     new HtmlWebpackPlugin({
+      filename: './index.html',
       template: './index.ejs',
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'vendor.[hash:8].js',
+      filename: 'assets/vendor.[hash:8].js',
     }),
-  ]).concat(ENV === 'production' ? [
+  // Production-only plugins
+  ]).concat(ENV !== 'production' ? [] : [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new Visualizer({
-      filename: '../stats/statistics.html',
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      output: {
-        comments: false,
-      },
-      compress: {
-        warnings: false,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        if_return: true,
-        join_vars: true,
-        negate_iife: false,
-        drop_console: true,
-      },
-    }),
-    new ReplacePlugin([{
-      partten: /throw\s+(new\s+)?[a-zA-Z]+Error\s*\(/g,
-      replacement: () => 'return;(',
-    }]),
-  ] : []),
+  ]),
 
   stats: { colors: true },
 

@@ -1,12 +1,12 @@
 /* eslint-disable func-style */
-import ReactDOM from 'react-dom/server';
-import { Helmet } from 'react-helmet';
-import createHistory from 'history/createMemoryHistory';
-import get from 'lodash/get';
-import last from 'lodash/last';
-import split from 'lodash/split';
-import { getClientInstance } from '../client';
-import logger from '../logger';
+// import ReactDOM from 'react-dom/server';
+// import { Helmet } from 'react-helmet';
+// import createHistory from 'history/createMemoryHistory';
+// import get from 'lodash/get';
+// import last from 'lodash/last';
+// import split from 'lodash/split';
+// import { getClientInstance } from '../client';
+// import logger from '../logger';
 
 // Prepares the HTML string and the appropriate headers
 // and subequently string replaces them into their placeholders
@@ -37,40 +37,41 @@ function renderToHtml(context) {
 // Note: Each function in the promise chain beyond the thenable context
 // should return the context or modified context.
 function serverRender(req, res) {
-  const client = getClientInstance(res.locals.clientFolders);
-  const {store, thunk} = configureStore(req, client);
+  console.log(res.locals);
+  // const client = getClientInstance(res.locals.clientFolders);
+  // const {store, thunk} = configureStore(req, client);
 
-  Promise.resolve(null)
-    .then(() => setCookies(req, client))
-    .then(() => setSystemInfo(req, store, client))
-    .then(() => initClient(store, client))
-    .then(() => thunk(store))
-    .then(setContextForThenable({ client, res, store }))
-    .then(checkLocationType)
-    .then(resolveClientComponent)
-    .then(renderToHtml)
-    .then(setStatusHeaders)
-    .then((context) => {
-      res.send(context.renderedHtml);
-      return context;
-    })
-    .catch((err) => {
-      if (err) {
-        if (err.message === 'redirect' || err.message === 'not-implemented') {
-          logger.info('Redirect - ', err.route.path);
-          res.redirect(err.route.status, err.route.path);
-          return;
-        }
-      }
+  // Promise.resolve(null)
+  //   .then(() => setCookies(req, client))
+  //   .then(() => setSystemInfo(req, store, client))
+  //   .then(() => initClient(store, client))
+  //   .then(() => thunk(store))
+  //   .then(setContextForThenable({ client, res, store }))
+  //   .then(checkLocationType)
+  //   .then(resolveClientComponent)
+  //   .then(renderToHtml)
+  //   .then(setStatusHeaders)
+  //   .then((context) => {
+  //     res.send(context.renderedHtml);
+  //     return context;
+  //   })
+  //   .catch((err) => {
+  //     if (err) {
+  //       if (err.message === 'redirect' || err.message === 'not-implemented') {
+  //         logger.info('Redirect - ', err.route.path);
+  //         res.redirect(err.route.status, err.route.path);
+  //         return;
+  //       }
+  //     }
 
-      logger.error(err);
+  //     logger.error(err);
 
-      const renderedHtmlError = client
-        .htmlError()
-        .replace(/<!--appContent-->/g, 'Server Error');
+  //     const renderedHtmlError = client
+  //       .htmlError()
+  //       .replace(/<!--appContent-->/g, 'Server Error');
 
-      res.send(renderedHtmlError);
-    });
+  //     res.send(renderedHtmlError);
+  //   });
 }
 
 export default serverRender;

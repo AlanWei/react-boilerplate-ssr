@@ -1,8 +1,8 @@
 import express from 'express';
-import ssrHandler from './modules/ssr';
+import ssr from './modules/ssr';
 
 const router = express.Router();
 
-router.use('/*', ssrHandler);
+router.use('/*', ssr);
 
 export default router;

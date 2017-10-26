@@ -171,7 +171,6 @@ module.exports = {
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
-    open: true,
     openPage: '',
     proxy: {
       // OPTIONAL: proxy configuration:

@@ -4,7 +4,7 @@ import app from 'app/index';
 
 import './styles/index.scss';
 
-const history = createBrowserHistory();
-const application = app.createApp(history);
+const { store, history } = app.createStore(createBrowserHistory(), {});
 
+const application = app.createApp(store, history);
 ReactDOM.render(application, window.document.getElementById('app'));

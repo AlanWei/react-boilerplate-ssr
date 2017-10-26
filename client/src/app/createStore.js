@@ -30,7 +30,10 @@ function createAppStore(history, preloadedState = {}) {
     composeEnhancers(applyMiddleware(...middlewares)),
   );
 
-  return store;
+  return {
+    store,
+    history,
+  };
 }
 
 export default createAppStore;

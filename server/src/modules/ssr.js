@@ -1,6 +1,5 @@
-/* eslint-disable func-style */
-// import ReactDOM from 'react-dom/server';
-// import { Helmet } from 'react-helmet';
+import ReactDOM from 'react-dom/server';
+import { Helmet } from 'react-helmet';
 import createHistory from 'history/createMemoryHistory';
 // import get from 'lodash/get';
 // import last from 'lodash/last';
@@ -18,15 +17,22 @@ function configureStore(req, client) {
   return client.app.createStore(history, preloadedState);
 }
 
+// This essentially starts passing down the "context"
+// object to the Promise "then" chain.
+function setContextForThenable(context) {
+  return () => context;
+}
+
 // Prepares the HTML string and the appropriate headers
 // and subequently string replaces them into their placeholders
-function renderToHtml(client, store) {
-  const appObject = client.app.createApp(context.store, context.initialComponent);
+function renderToHtml(context) {
+  const { client, store, history } = context;
+  const appObject = client.app.createApp(store, history);
   const appString = ReactDOM.renderToString(appObject);
   const helmet = Helmet.renderStatic();
-  const initialState = JSON.stringify(context.store.getState()).replace(/</g, '\\u003c');
+  const initialState = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
 
-  context.renderedHtml = context.client
+  context.renderedHtml = client
     .html()
     .replace(/<!--appContent-->/g, appString)
     .replace(/<!--appState-->/g, `<script>window.__INITIAL_STATE__ = ${initialState}</script>`)
@@ -48,10 +54,11 @@ function renderToHtml(client, store) {
 // should return the context or modified context.
 function serverRender(req, res) {
   const client = getClientInstance(res.locals.clientFolders);
-  const store = configureStore(req, client);
+  const { store, history } = configureStore(req, client);
 
   Promise.resolve(null)
-    .then(renderToHtml(client, store))
+    .then(setContextForThenable({ client, store, history }))
+    .then(renderToHtml)
     .then((context) => {
       res.send(context.renderedHtml);
       return context;

@@ -15,6 +15,8 @@ const VERSION = pkg.version;
 
 const SOURCE_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
+const SERVER_DIR = path.join(OUTPUT_DIR, VERSION, 'server');
+const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 module.exports = {
   context: SOURCE_DIR,
@@ -42,9 +44,9 @@ module.exports = {
 
   output: {
     path: IS_SERVER ?
-      path.join(OUTPUT_DIR, VERSION, 'server')
+      SERVER_DIR
       :
-      path.join(OUTPUT_DIR, VERSION),
+      CLIENT_DIR,
     publicPath: '/',
     libraryTarget: IS_SERVER ? 'commonjs2' : 'umd',
     filename: 'assets/[name].[chunkhash:8].js',
@@ -134,8 +136,8 @@ module.exports = {
   ].concat(!IS_SERVER ? [] : [
   // Server-only plugins
     new PostCompile(() => {
-      rimraf.sync(path.join(OUTPUT_DIR, 'assets', 'css'));
-      rimraf.sync(path.join(OUTPUT_DIR, 'assets', 'images'));
+      rimraf.sync(path.join(SERVER_DIR, 'assets', 'css'));
+      rimraf.sync(path.join(SERVER_DIR, 'assets', 'images'));
     }),
   // Client-only plugins
   ]).concat(IS_SERVER ? [] : [
@@ -171,13 +173,5 @@ module.exports = {
     publicPath: '/',
     contentBase: './src',
     historyApiFallback: true,
-    openPage: '',
-    proxy: {
-      // OPTIONAL: proxy configuration:
-      // '/optional-prefix/**': { // path pattern to rewrite
-      //   target: 'http://target-host.com',
-      //   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
-      // }
-    },
   },
 };

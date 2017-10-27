@@ -12,7 +12,6 @@
     "build:client": "BUILD_TYPE=client webpack -p --progress",
     "build:server": "BUILD_TYPE=server webpack -p --progress",
     "clean": "rm -rf build/",
-    "start": "npm run build && serve build -s -c 1",
     "lint": "eslint src"
   },
   "author": "Alan Wei",

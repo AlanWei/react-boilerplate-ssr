@@ -9,8 +9,8 @@ const AsyncHome = loadable({
   loading: Loading,
 });
 
-const AsyncAnswers = loadable({
-  loader: () => import('../../views/answers'),
+const AsyncUser = loadable({
+  loader: () => import('../../views/user'),
   loading: Loading,
 });
 
@@ -18,8 +18,8 @@ const routes = [{
   path: '/',
   component: AsyncHome,
 }, {
-  path: '/answers',
-  component: AsyncAnswers,
+  path: '/user',
+  component: AsyncUser,
 }];
 
 export default routes;

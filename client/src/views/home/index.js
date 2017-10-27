@@ -5,6 +5,7 @@ import map from 'lodash/map';
 import get from 'lodash/get';
 import action from './action';
 import selector from './selector';
+import logo from '../../assets/logo.svg';
 import './style.scss';
 
 const propTypes = {
@@ -34,9 +35,13 @@ class Home extends Component {
   render() {
     return (
       <div className="home">
-        Home
-        {this.renderTopics()}
-        {this.renderUserTopics()}
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <p className="App-intro">
+          To get started, edit <code>src/views/home/index.js</code> and save to reload.
+        </p>
       </div>
     );
   }

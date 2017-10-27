@@ -1,21 +1,30 @@
 import express from 'express';
 import morgan from 'morgan';
+import loadable from 'react-loadable';
 import localAssetServer from './modules/local-asset-server';
 import { clientVersionMiddleware } from './client';
 import router from './router';
 
+const ENV = process.env.NODE_ENV || 'development';
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 app.use(morgan('combined'))
-
 app.use(clientVersionMiddleware);
 
-app.set('port', process.env.PORT || 3000);
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/assets/*', localAssetServer);
+}
 
 app.use(router);
 
-app.listen(app.get('port'), () => {
-  console.info(`Server listening on ${app.get('port')}`);
+app.set('port', PORT);
+
+loadable.preloadAll().then(() => {
+  app.listen(app.get('port'), () => {
+    console.info(`Server listening on ${app.get('port')}`);
+  });
 });
 
 export default app;

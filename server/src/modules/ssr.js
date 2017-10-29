@@ -57,7 +57,7 @@ function serverRender(req, res) {
   const { store, history, routes } = configureStore(req, client);
 
   const branch = matchRoutes(routes, req.originalUrl);
-  const thunk = get(head(branch), 'route.thunk');
+  const thunk = get(head(branch), 'route.thunk', () => {});
 
   Promise.resolve(null)
     .then(() => (thunk(store)))

@@ -1,16 +1,14 @@
 import createReducer from 'utils/createReducer';
 
 const defaultState = () => ({
-  users: [],
-  topics: [],
+  frameworks: [],
 });
 
-const getTopicsSuccess = (state, action) => ({
+const getFrameworksSuccess = (state, action) => ({
   ...state,
-  users: action.payload.data.users,
-  topics: action.payload.data.topics,
+  frameworks: action.payload.data.frameworks,
 });
 
 export default createReducer(defaultState, {
-  HOME_GET_TOPICS_SUCCESS: getTopicsSuccess,
+  HOME_GET_FRAMEWORKS_SUCCESS: getFrameworksSuccess,
 });

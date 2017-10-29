@@ -1,22 +1,18 @@
 import createAsyncAction from 'utils/createAsyncAction';
 
-function getTopics() {
-  return createAsyncAction('HOME_GET_TOPICS', () => (
+function getFrameworks() {
+  return createAsyncAction('HOME_GET_FRAMEWORKS', () => (
     Promise.resolve({
       data: {
-        users: [{
-          id: 1,
-          name: 'Alan',
-        }, {
-          id: 2,
-          name: 'Ben',
-        }],
-        topics: [{
+        frameworks: [{
           id: 1,
           title: 'React',
         }, {
           id: 2,
           title: 'Angular',
+        }, {
+          id: 3,
+          title: 'Vue',
         }],
       },
     })
@@ -24,5 +20,5 @@ function getTopics() {
 }
 
 export default {
-  getTopics,
+  getFrameworks,
 };

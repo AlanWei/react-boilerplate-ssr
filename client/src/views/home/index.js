@@ -2,32 +2,27 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
-import get from 'lodash/get';
 import action from './action';
-import selector from './selector';
 import logo from '../../assets/logo.svg';
 import './style.scss';
 
 const propTypes = {
-  topics: PropTypes.arrayOf(PropTypes.shape({
-    user: PropTypes.arrayOf(PropTypes.object),
-    topics: PropTypes.arrayOf(PropTypes.object),
+  frameworks: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   })).isRequired,
-  userTopics: PropTypes.shape({
-    user: PropTypes.arrayOf(PropTypes.object),
-    topics: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
 };
 
 class Home extends Component {
   renderTopics = () => (
-    map(this.props.topics, topic => (
-      <div key={topic.id}>{topic.title}</div>
+    map(this.props.frameworks, framework => (
+      <div
+        key={framework.id}
+        className="App-framework"
+      >
+        {framework.title}
+      </div>
     ))
-  )
-
-  renderUserTopics = () => (
-    <div>{get(this.props.userTopics, 'user[0].name')}</div>
   )
 
   render() {
@@ -40,22 +35,19 @@ class Home extends Component {
         <p className="App-intro">
           To get started, edit <code>src/views/home/index.js</code> and save to reload.
         </p>
-        <h1>Frontend Framework</h1>
+        <h1>Frontend Frameworks</h1>
         {this.renderTopics()}
-        <h1>Selected User</h1>
-        {this.renderUserTopics()}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  topics: state.home.topics,
-  userTopics: selector.userTopicSelector(state),
+  frameworks: state.home.frameworks,
 });
 
 const mapDispatchToProps = {
-  getTopics: action.getTopics,
+  getFrameworks: action.getFrameworks,
 };
 
 Home.propTypes = propTypes;

@@ -23,7 +23,6 @@ const routes = [{
 }, {
   path: '/user',
   component: AsyncUser,
-  thunk: () => {},
 }];
 
 export default routes;

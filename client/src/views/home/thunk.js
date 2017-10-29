@@ -1,7 +1,5 @@
 import action from './action';
 
-const thunk = dispatch => ([
-  dispatch(action.getTopics()),
-]);
-
-export default thunk;
+export default function thunk(store) {
+  store.dispatch(action.getTopics());
+}

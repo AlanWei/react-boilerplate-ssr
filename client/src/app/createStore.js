@@ -4,13 +4,11 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import routes from './router/routes';
 
-const ENV = process.env.NODE_ENV;
-
 function createAppStore(history, preloadedState = {}) {
   // enhancers
   let composeEnhancers = compose;
 
-  if (typeof window !== 'undefined' && ENV === 'development') {
+  if (typeof window !== 'undefined') {
     // eslint-disable-next-line no-underscore-dangle
     composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
   }

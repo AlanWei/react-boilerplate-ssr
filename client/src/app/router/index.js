@@ -12,13 +12,8 @@ const propTypes = {
 const Router = props => (
   <ConnectedRouter history={props.history}>
     <div>
-      {map(routes, route => (
-        <Route
-          key={route.path}
-          exact={route.path === '/'}
-          path={route.path}
-          component={route.component}
-        />
+      {map(routes, (route, idx) => (
+        <Route key={idx} {...route} />
       ))}
     </div>
   </ConnectedRouter>

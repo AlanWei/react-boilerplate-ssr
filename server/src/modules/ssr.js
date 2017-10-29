@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import createHistory from 'history/createMemoryHistory';
 import get from 'lodash/get';
 import map from 'lodash/map';
+import head from 'lodash/head';
 import { getClientInstance } from '../client';
 
 // Initializes the store with the starting url from request.
@@ -55,12 +56,10 @@ function serverRender(req, res) {
   const client = getClientInstance(res.locals.clientFolders);
   const { store, history, routes } = configureStore(req, client);
 
-  const branch = matchRoutes(routes, req.url);
-  const matchRoute = map(branch, (route) => (
-    console.log(route.route, 'route')
-  ));
+  const branch = matchRoutes(routes, req.originalUrl);
+  const thunk = get(head(branch), 'route.thunk');
 
-  Promise.resolve(null)
+  Promise.resolve(thunk(store))
     .then(setContextForThenable({ client, store, history }))
     .then(renderToHtml)
     .then((context) => {

@@ -17,17 +17,9 @@ const propTypes = {
     user: PropTypes.arrayOf(PropTypes.object),
     topics: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  getTopics: PropTypes.func.isRequired,
 };
 
 class Home extends Component {
-  componentWillMount() {
-    this.props.getTopics();
-  }
-  componentDidMount() {
-    this.props.getTopics();
-  }
-
   renderTopics = () => (
     map(this.props.topics, topic => (
       <div key={topic.id}>{topic.title}</div>

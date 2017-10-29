@@ -1,11 +1,10 @@
 import ReactDOM from 'react-dom/server';
+import { matchRoutes } from 'react-router-config';
 import { Helmet } from 'react-helmet';
 import createHistory from 'history/createMemoryHistory';
-// import get from 'lodash/get';
-// import last from 'lodash/last';
-// import split from 'lodash/split';
+import get from 'lodash/get';
+import map from 'lodash/map';
 import { getClientInstance } from '../client';
-// import logger from '../logger';
 
 // Initializes the store with the starting url from request.
 function configureStore(req, client) {
@@ -54,7 +53,12 @@ function renderToHtml(context) {
 // should return the context or modified context.
 function serverRender(req, res) {
   const client = getClientInstance(res.locals.clientFolders);
-  const { store, history } = configureStore(req, client);
+  const { store, history, routes } = configureStore(req, client);
+
+  const branch = matchRoutes(routes, req.url);
+  const matchRoute = map(branch, (route) => (
+    console.log(route.route, 'route')
+  ));
 
   Promise.resolve(null)
     .then(setContextForThenable({ client, store, history }))

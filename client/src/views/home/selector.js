@@ -9,7 +9,7 @@ const userTopicSelector = createSelector(
   usersSelector,
   (topics, users) => {
     const selectedUser = filter(users, user => (user.id === 1));
-    const selectedTopics = filter(topics, topic => (topic.id === 1));
+    const selectedTopics = filter(topics, topic => (topic.id === selectedUser.id));
     return {
       user: selectedUser,
       topics: selectedTopics,

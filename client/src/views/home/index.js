@@ -9,7 +9,10 @@ import logo from '../../assets/logo.svg';
 import './style.scss';
 
 const propTypes = {
-  topics: PropTypes.arrayOf(PropTypes.object).isRequired,
+  topics: PropTypes.arrayOf(PropTypes.shape({
+    user: PropTypes.arrayOf(PropTypes.object),
+    topics: PropTypes.arrayOf(PropTypes.object),
+  })).isRequired,
   userTopics: PropTypes.shape({
     user: PropTypes.arrayOf(PropTypes.object),
     topics: PropTypes.arrayOf(PropTypes.object),
@@ -18,6 +21,9 @@ const propTypes = {
 };
 
 class Home extends Component {
+  componentWillMount() {
+    this.props.getTopics();
+  }
   componentDidMount() {
     this.props.getTopics();
   }
@@ -42,6 +48,10 @@ class Home extends Component {
         <p className="App-intro">
           To get started, edit <code>src/views/home/index.js</code> and save to reload.
         </p>
+        <h1>Frontend Framework</h1>
+        {this.renderTopics}
+        <h1>Selected User</h1>
+        {this.renderUserTopics}
       </div>
     );
   }

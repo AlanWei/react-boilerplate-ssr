@@ -13,10 +13,10 @@ function getTopics() {
         }],
         topics: [{
           id: 1,
-          title: 'First',
+          title: 'React',
         }, {
           id: 2,
-          title: 'Second',
+          title: 'Angular',
         }],
       },
     })

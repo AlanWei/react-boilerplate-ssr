@@ -11,7 +11,7 @@ const pkg = require('./package.json');
 const ENV = process.env.NODE_ENV || 'development';
 const BUILD_TYPE = process.env.BUILD_TYPE || 'client';
 const IS_SERVER = BUILD_TYPE === 'server';
-const VERSION = pkg.version;
+const VERSION = `v${pkg.version}`;
 
 const SOURCE_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
@@ -168,7 +168,7 @@ module.exports = {
   devtool: ENV === 'production' ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
 
   devServer: {
-    port: process.env.PORT || 8000,
+    port: process.env.PORT || 8080,
     host: 'localhost',
     publicPath: '/',
     contentBase: './src',

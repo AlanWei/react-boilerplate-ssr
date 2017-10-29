@@ -59,7 +59,8 @@ function serverRender(req, res) {
   const branch = matchRoutes(routes, req.originalUrl);
   const thunk = get(head(branch), 'route.thunk');
 
-  Promise.resolve(thunk(store))
+  Promise.resolve(null)
+    .then(() => (thunk(store)))
     .then(setContextForThenable({ client, store, history }))
     .then(renderToHtml)
     .then((context) => {

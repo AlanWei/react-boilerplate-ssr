@@ -1,5 +1,4 @@
 import loadable from 'react-loadable';
-import createAsyncThunk from 'utils/createAsyncThunk';
 import homeThunk from 'views/home/thunk';
 
 const Loading = () => (
@@ -24,9 +23,7 @@ const routes = [{
 }, {
   path: '/user',
   component: AsyncUser,
-}, {
-  path: '/user/:id',
-  component: AsyncHome,
+  thunk: () => {},
 }];
 
 export default routes;

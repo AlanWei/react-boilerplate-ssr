@@ -41,9 +41,9 @@ class Home extends Component {
           To get started, edit <code>src/views/home/index.js</code> and save to reload.
         </p>
         <h1>Frontend Framework</h1>
-        {this.renderTopics}
+        {this.renderTopics()}
         <h1>Selected User</h1>
-        {this.renderUserTopics}
+        {this.renderUserTopics()}
       </div>
     );
   }

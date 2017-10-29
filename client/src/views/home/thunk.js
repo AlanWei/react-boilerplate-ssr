@@ -1,5 +1,9 @@
 import action from './action';
 
-export default function thunk(store) {
-  store.dispatch(action.getTopics());
-}
+const thunk = store => (
+  Promise.all([
+    store.dispatch(action.getTopics()),
+  ])
+);
+
+export default thunk;

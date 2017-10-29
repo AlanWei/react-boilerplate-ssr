@@ -8,12 +8,17 @@ import './style.scss';
 
 const propTypes = {
   frameworks: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
   })).isRequired,
+  getFrameworks: PropTypes.func.isRequired,
 };
 
 class Home extends Component {
+  componentDidMount() {
+    this.props.getFrameworks();
+  }
+
   renderTopics = () => (
     map(this.props.frameworks, framework => (
       <div

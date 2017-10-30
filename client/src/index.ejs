@@ -6,6 +6,8 @@
     <meta name="robots" content="noindex, nofollow">
 
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <% for (var chunk in htmlWebpackPlugin.files.css) { %>
       <link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">

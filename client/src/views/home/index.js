@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
 import action from './action';
@@ -19,7 +20,7 @@ class Home extends Component {
     this.props.getFrameworks();
   }
 
-  renderTopics = () => (
+  renderFrameworks = () => (
     map(this.props.frameworks, framework => (
       <div
         key={framework.id}
@@ -40,8 +41,10 @@ class Home extends Component {
         <p className="App-intro">
           To get started, edit <code>src/views/home/index.js</code> and save to reload.
         </p>
-        <h1>Frontend Frameworks</h1>
-        {this.renderTopics()}
+        <Link to="/user">
+          <h1>Frontend Frameworks</h1>
+        </Link>
+        {this.renderFrameworks()}
       </div>
     );
   }

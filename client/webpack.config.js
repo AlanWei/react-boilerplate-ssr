@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -141,7 +142,11 @@ module.exports = {
     }),
   // Client-only plugins
   ]).concat(IS_SERVER ? [] : [
+    new CopyWebpackPlugin([
+      { from: 'favicon.ico' },
+    ]),
     new HtmlWebpackPlugin({
+      title: 'React App',
       filename: './index.html',
       template: './index.ejs',
     }),

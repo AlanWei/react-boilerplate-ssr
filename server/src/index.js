@@ -1,6 +1,5 @@
 import express from 'express';
 import morgan from 'morgan';
-import loadable from 'react-loadable';
 import localAssetServer from './modules/local-asset-server';
 import { clientVersionMiddleware } from './client';
 import router from './router';
@@ -21,10 +20,8 @@ app.use(router);
 
 app.set('port', PORT);
 
-loadable.preloadAll().then(() => {
-  app.listen(app.get('port'), () => {
-    console.info(`Server listening on ${app.get('port')}`);
-  });
+app.listen(app.get('port'), () => {
+  console.info(`Server listening on ${app.get('port')}`);
 });
 
 export default app;

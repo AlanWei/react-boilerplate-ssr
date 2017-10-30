@@ -23,6 +23,7 @@ const routes = [{
 }, {
   path: '/user',
   component: AsyncUser,
+  thunk: createAsyncThunk(() => import('../../views/user/thunk')),
 }];
 
 export default routes;

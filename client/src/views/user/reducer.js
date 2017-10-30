@@ -1,14 +1,14 @@
 import createReducer from 'utils/createReducer';
 
 const defaultState = () => ({
-  message: '',
+  user: '',
 });
 
-const getMessageSuccess = (state, action) => ({
+const getUserSuccess = (state, action) => ({
   ...state,
-  message: action.payload.data,
+  user: action.payload.data,
 });
 
 export default createReducer(defaultState, {
-  HOME_GET_MESSAGE_SUCCESS: getMessageSuccess,
+  USER_GET_USER_SUCCESS: getUserSuccess,
 });

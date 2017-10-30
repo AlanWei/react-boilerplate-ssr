@@ -1,24 +1,13 @@
 import createAsyncAction from 'utils/createAsyncAction';
 
-function getFrameworks() {
-  return createAsyncAction('HOME_GET_FRAMEWORKS', () => (
+function getMessage() {
+  return createAsyncAction('HOME_GET_MESSAGE', () => (
     Promise.resolve({
-      data: {
-        frameworks: [{
-          id: 1,
-          title: 'React',
-        }, {
-          id: 2,
-          title: 'Angular',
-        }, {
-          id: 3,
-          title: 'Vue',
-        }],
-      },
+      data: 'React is awesome!',
     })
   ));
 }
 
 export default {
-  getFrameworks,
+  getMessage,
 };

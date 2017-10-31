@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import action from './action';
 import logo from '../../assets/logo.svg';
@@ -25,9 +26,11 @@ class Home extends Component {
         <p className="App-intro">
           To get started, edit <code>src/views/home/index.js</code> and save to reload.
         </p>
-        <p className="App-intro">
-          {this.props.message}
-        </p>
+        <Link to="/user">
+          <p className="App-intro">
+            {this.props.message}
+          </p>
+        </Link>
       </div>
     );
   }

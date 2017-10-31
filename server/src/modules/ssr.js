@@ -49,7 +49,6 @@ function renderToHtml(context) {
 }
 
 // SSR Main method
-//
 // Note: Each function in the promise chain beyond the thenable context
 // should return the context or modified context.
 function serverRender(req, res) {

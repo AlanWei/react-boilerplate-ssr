@@ -23,7 +23,7 @@ yarn run dev:server
 
 cd server
 yarn install
-CLIENT_VERSION=[BuildVersion] yarn watch
+yarn watch
 ```
 
 Navigate to `http://localhost:3000`

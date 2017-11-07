@@ -21,7 +21,7 @@ const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 module.exports = {
   context: SOURCE_DIR,
-  entry: () => {
+  entry: (() => {
     if (IS_SERVER) {
       return {
         server: './app/index.js',
@@ -41,7 +41,7 @@ module.exports = {
       ],
       client: './index.js',
     };
-  },
+  })(),
 
   output: {
     path: IS_SERVER ?

@@ -19,5 +19,10 @@
   "globals": {
     "document": true,
     "window": true
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
   }
 }

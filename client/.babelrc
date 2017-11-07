@@ -12,5 +12,21 @@
     ["module-resolver", {
       "root": ["./src"]
     }]
-  ]
+  ],
+  "env": {
+    "production": {
+      "sourceMaps": false,
+      "plugins": [
+        "transform-react-remove-prop-types"
+      ]
+    },
+    "test": {
+      "presets": [
+        "es2015"
+      ],
+      "plugins": [
+        "dynamic-import-webpack"
+      ]
+    }
+  }
 }

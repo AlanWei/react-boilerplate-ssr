@@ -15,10 +15,7 @@
   ],
   "env": {
     "production": {
-      "sourceMaps": false,
-      "plugins": [
-        "transform-react-remove-prop-types"
-      ]
+      "sourceMaps": false
     },
     "test": {
       "presets": [

@@ -27,3 +27,5 @@ yarn watch
 ```
 
 Navigate to `http://localhost:3000`
+
+> For the pure client side version, please visit [react-boilerplate](https://github.com/AlanWei/react-boilerplate)

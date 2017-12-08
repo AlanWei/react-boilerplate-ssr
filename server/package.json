@@ -1,5 +1,5 @@
 {
-  "name": "react-boilerplate-2017-ssr",
+  "name": "react-boilerplate-ssr",
   "version": "1.0.0",
   "description": "SSR services with React 16.0",
   "main": "index.js",
@@ -13,8 +13,8 @@
     "history": "^4.7.2",
     "lodash": "^4.17.4",
     "morgan": "^1.9.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-router": "^4.2.0",
     "react-router-config": "^1.0.0-beta.4"

@@ -6,9 +6,12 @@ import app from 'app/index';
 import './styles/index.scss';
 
 let client;
+let initialState;
 
-// eslint-disable-next-line no-underscore-dangle
-const initialState = window.__INITIAL_STATE__;
+if (typeof window !== 'undefined') {
+  // eslint-disable-next-line no-underscore-dangle
+  initialState = window.__INITIAL_STATE__;
+}
 
 if (isNil(initialState)) {
   client = app.createStore(createBrowserHistory(), {});

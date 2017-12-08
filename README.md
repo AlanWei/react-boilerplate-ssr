@@ -1,4 +1,4 @@
-# React Boilerplate 2017
+# React Boilerplate SSR
 
 > Universal React v16.0 boilerplate
 

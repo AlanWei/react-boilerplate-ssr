@@ -1,6 +1,7 @@
 const ReactDOM = require('react-dom/server');
 const { matchRoutes } = require('react-router-config');
 const { Helmet } = require('react-helmet');
+const serialize = require('serialize-javascript');
 const createHistory = require('history/createMemoryHistory').default;
 const get = require('lodash/get');
 const head = require('lodash/head');
@@ -29,7 +30,7 @@ function renderToHtml(context) {
   const appObject = client.app.createApp(store, history);
   const appString = ReactDOM.renderToString(appObject);
   const helmet = Helmet.renderStatic();
-  const initialState = JSON.stringify(store.getState()).replace(/</g, '\\u003c');
+  const initialState = serialize(context.store.getState(), {isJSON: true});
 
   context.renderedHtml = client
     .html()

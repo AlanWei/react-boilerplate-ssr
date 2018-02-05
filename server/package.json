@@ -13,15 +13,22 @@
   "author": "Alan Wei",
   "license": "MIT",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "dns-prefetch-control": "^0.1.0",
+    "dont-sniff-mimetype": "^1.0.0",
     "express": "^4.16.2",
+    "hide-powered-by": "^1.0.0",
     "history": "^4.7.2",
+    "hsts": "^2.1.0",
+    "ienoopen": "^1.0.0",
     "lodash": "^4.17.5",
     "morgan": "^1.9.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
     "react-router": "^4.2.0",
-    "react-router-config": "^1.0.0-beta.4"
+    "react-router-config": "^1.0.0-beta.4",
+    "x-xss-protection": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

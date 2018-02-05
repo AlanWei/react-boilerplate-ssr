@@ -1,15 +1,14 @@
-import ReactDOM from 'react-dom/server';
-import { matchRoutes } from 'react-router-config';
-import { Helmet } from 'react-helmet';
-import createHistory from 'history/createMemoryHistory';
-import get from 'lodash/get';
-import map from 'lodash/map';
-import head from 'lodash/head';
-import { getClientInstance } from '../client';
+const ReactDOM = require('react-dom/server');
+const { matchRoutes } = require('react-router-config');
+const { Helmet } = require('react-helmet');
+const createHistory = require('history/createMemoryHistory').default;
+const get = require('lodash/get');
+const head = require('lodash/head');
+const { getClientInstance } = require('../client');
 
-// Initializes the store with the starting url from request.
+// Initializes the store with the starting url = require( request.
 function configureStore(req, client) {
-  console.log('server path', req.originalUrl);
+  console.info('server path', req.originalUrl);
 
   const history = createHistory({ initialEntries: [req.originalUrl] });
   const preloadedState = {};
@@ -67,8 +66,8 @@ function serverRender(req, res) {
       return context;
     })
     .catch((err) => {
-      console.log(`SSR error: ${err}`);
+      console.error(`SSR error: ${err}`);
     });
 }
 
-export default serverRender;
+module.exports = serverRender;

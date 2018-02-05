@@ -1,15 +1,16 @@
-import express from 'express';
-import morgan from 'morgan';
-import { clientVersionMiddleware, clientAssetsMiddleware } from './client';
-import router from './router';
+const express = require('express');
+const morgan = require('morgan');
+const { clientVersionMiddleware } = require('./client');
+const router = require('./router');
 
 const ENV = process.env.NODE_ENV || 'development';
 const PORT = process.env.PORT || 3000;
 const IS_PROD = ENV === 'production';
 
 const app = express();
+const logger = morgan(IS_PROD ? 'common' : 'dev');
 
-app.use(morgan(IS_PROD ? 'common' : 'dev'));
+app.use(logger);
 app.use(clientVersionMiddleware);
 app.get('/assets/*', (req, res) => {
   const file = req.params[0] ? req.params[0] : 'index.html';
@@ -20,10 +21,8 @@ app.get('/assets/*', (req, res) => {
 
 app.use(router);
 
-app.set('port', PORT);
-
-app.listen(app.get('port'), () => {
-  console.info(`Server listening on ${app.get('port')}`);
+app.listen(PORT, () => {
+  console.info(`Server listening on ${PORT}`);
 });
 
-export default app;
+module.exports = app;

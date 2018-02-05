@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 const CLIENT_VERSION = process.env.CLIENT_VERSION;
 
@@ -28,7 +28,7 @@ const getClientInstance = (folders) => {
   // Only read the file when we need to execute it
   // Prevents pre-mature reading when application fails.
   const html = () => fs.readFileSync(
-    path.join(folders.CLIENT_FOLDER, 'index.html'), 'utf8',
+    path.join(folders.CLIENT_FOLDER, 'index.html'), 'utf8'
   );
 
   return {
@@ -42,7 +42,7 @@ const clientVersionMiddleware = (req, res, next) => {
   next();
 };
 
-export {
+module.exports = {
   getClientInstance,
   clientVersionMiddleware,
 };

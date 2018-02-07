@@ -28,4 +28,13 @@ yarn watch
 
 Navigate to `http://localhost:3000`
 
-> For the pure client side version, please visit [react-boilerplate](https://github.com/AlanWei/react-boilerplate)
+---
+
+# CHANGLOG
+
+### 2018.02.05
+1. Update dependencies for both client & server side.
+2. Add server side eslint check.
+3. Add server side XSS protection.
+
+> For pure client side version, please visit [react-boilerplate](https://github.com/AlanWei/react-boilerplate)

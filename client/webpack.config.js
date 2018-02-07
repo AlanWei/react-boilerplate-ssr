@@ -66,9 +66,6 @@ module.exports = {
       },
     }, {
       test: /\.(scss|css)$/,
-      include: [
-        SOURCE_DIR,
-      ],
       use: ExtractTextPlugin.extract({
         fallback: {
           loader: 'style-loader',
@@ -112,15 +109,6 @@ module.exports = {
     }],
   },
 
-  resolve: {
-    extensions: ['.jsx', '.js', '.json', '.scss'],
-    modules: [
-      path.resolve(__dirname, 'node_modules'),
-      'node_modules',
-    ],
-    alias: {},
-  },
-
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new ExtractTextPlugin({
@@ -156,22 +144,21 @@ module.exports = {
     }),
   // Production-only plugins
   ]).concat(ENV !== 'production' ? [] : [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
   ]),
 
-  stats: { colors: true },
-
-  node: {
-    global: true,
-    process: false,
-    Buffer: false,
-    __filename: false,
-    __dirname: false,
-    setImmediate: false,
+  resolve: {
+    extensions: ['.jsx', '.js', '.json', '.scss'],
+    modules: [
+      SOURCE_DIR,
+      'node_modules',
+    ],
+    alias: {},
   },
 
-  devtool: ENV === 'production' ? 'cheap-module-source-map' : 'cheap-module-eval-source-map',
-
+  stats: { colors: true },
+  devtool: ENV === 'production' ? 'source-map' : 'eval-source-map',
   devServer: {
     port: process.env.PORT || 8080,
     host: 'localhost',

@@ -2,9 +2,6 @@
   "name": "react-boilerplate-ssr",
   "version": "1.0.0",
   "description": "SSR services with React 16.0",
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "main": "index.js",
   "scripts": {
     "watch": "CLIENT_VERSION=v1.0.0 babel-watch src/index.js",
@@ -14,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "cookie-parser": "^1.4.3",
+    "ddos": "^0.1.25",
     "dns-prefetch-control": "^0.1.0",
     "dont-sniff-mimetype": "^1.0.0",
     "express": "^4.16.2",

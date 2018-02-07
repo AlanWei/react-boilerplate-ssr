@@ -37,4 +37,7 @@ Navigate to `http://localhost:3000`
 2. Add server side eslint check.
 3. Add server side XSS protection.
 
+### 2018.02.07
+1. Add server side DDOS protection.
+2. Better webpack configuration.
 > For pure client side version, please visit [react-boilerplate](https://github.com/AlanWei/react-boilerplate)

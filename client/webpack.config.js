@@ -1,10 +1,8 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const PostCompile = require('post-compile-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const rimraf = require('rimraf');
 const pkg = require('./package.json');
@@ -20,38 +18,23 @@ const SERVER_DIR = path.join(OUTPUT_DIR, VERSION, 'server');
 const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 module.exports = {
-  context: SOURCE_DIR,
-  entry: (() => {
-    if (IS_SERVER) {
-      return {
-        server: './app/index.js',
-      };
-    }
+  mode: ENV,
 
-    return {
-      vendor: [
-        'react',
-        'react-dom',
-        'classnames',
-        'prop-types',
-        'redux',
-        'react-redux',
-        'redux-thunk',
-        'reselect',
-      ],
-      client: './index.js',
-    };
-  })(),
+  context: SOURCE_DIR,
+
+  entry: IS_SERVER ? {
+    server: './app/index.js',
+  } : {
+    client: './index.js',
+  },
 
   output: {
     path: IS_SERVER ?
       SERVER_DIR
       :
       CLIENT_DIR,
-    publicPath: '/',
+    filename: 'assets/[name].[hash:8].js',
     libraryTarget: IS_SERVER ? 'commonjs2' : 'umd',
-    filename: 'assets/[name].[chunkhash:8].js',
-    chunkFilename: 'assets/[id].[name].[chunkhash:8].js',
   },
 
   module: {
@@ -65,40 +48,17 @@ module.exports = {
         },
       },
     }, {
-      test: /\.(scss|css)$/,
-      use: ExtractTextPlugin.extract({
-        fallback: {
-          loader: 'style-loader',
-          options: {
-            singleton: true,
-          },
-        },
-        use: [{
-          loader: 'css-loader',
-          options: {
-            minimize: ENV === 'production',
-            sourceMap: ENV === 'development',
-            importLoaders: 1,
-          },
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins: () => [
-              autoprefixer({ browsers: 'last 5 versions' }),
-            ],
-            sourceMap: true,
-          },
-        }, {
-          loader: 'sass-loader',
-          options: {
-            sourceMap: ENV === 'development',
-          },
-        }],
-      }),
+      test: /\.scss$/,
+      exclude: /node_modules/,
+      use: ['style-loader', 'css-loader', 'sass-loader'],
+    }, {
+      test: /\.css$/,
+      include: /node_modules/,
+      use: ['style-loader', 'css-loader'],
     }, {
       test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
       use: ENV === 'production' ? {
-        loader: 'file-loader?name=[path][name]_[hash].[ext]',
+        loader: 'file-loader',
         options: {
           name: '[hash:8].[ext]',
           outputPath: 'assets/images/',
@@ -111,11 +71,6 @@ module.exports = {
 
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin({
-      filename: 'assets/css/style.[hash].css',
-      allChunks: true,
-      disable: ENV !== 'production',
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
       'process.env.BUILD_TYPE': JSON.stringify(BUILD_TYPE),
@@ -138,15 +93,15 @@ module.exports = {
       filename: './index.html',
       template: './index.ejs',
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'assets/vendor.[hash:8].js',
-    }),
-  // Production-only plugins
-  ]).concat(ENV !== 'production' ? [] : [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
   ]),
+
+  optimization: {
+    namedModules: true,
+    splitChunks: {
+      name: 'vendor',
+      minChunks: 2,
+    },
+  },
 
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss'],
@@ -154,7 +109,6 @@ module.exports = {
       SOURCE_DIR,
       'node_modules',
     ],
-    alias: {},
   },
 
   stats: { colors: true },

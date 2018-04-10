@@ -17,10 +17,10 @@ const IS_PROD = ENV === 'production';
 
 const app = express();
 
-app.use(new Ddos({
-  burst:10,
-  limit:15,
-}).express);
+// app.use(new Ddos({
+//   burst:10,
+//   limit:15,
+// }).express);
 app.use(dnsPrefetchControl({
   allow: false,
 }));

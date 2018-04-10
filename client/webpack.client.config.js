@@ -1,11 +1,14 @@
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 const path = require('path');
 const pkg = require('./package.json');
 
 const ENV = process.env.NODE_ENV || 'development';
 const VERSION = `v${pkg.version}`;
+const IS_PROD = ENV === 'production';
 
 const SOURCE_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
@@ -43,11 +46,42 @@ module.exports = {
     }, {
       test: /\.scss$/,
       exclude: /node_modules/,
-      use: ['style-loader', 'css-loader', 'sass-loader'],
+      use: IS_PROD ? [
+        MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: { minimize: true },
+        },
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [autoprefixer({ browsers: 'last 5 versions' })],
+            sourceMap: true,
+          },
+        },
+        'sass-loader',
+      ] : [
+        {
+          loader: 'style-loader',
+          options: { singleton: true },
+        },
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [autoprefixer({ browsers: 'last 5 versions' })],
+            sourceMap: true,
+          },
+        },
+        'sass-loader',
+      ],
     }, {
       test: /\.css$/,
       include: /node_modules/,
-      use: ['style-loader', 'css-loader'],
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+      ],
     }, {
       test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
       use: ENV === 'production' ? {
@@ -66,6 +100,10 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
     }),
+    new MiniCssExtractPlugin({
+      filename: 'assets/css/style.[hash:8].css',
+      chunkFilename: 'assets/css/[id].[hash:8].css',
+    }),
     new CopyWebpackPlugin([
       { from: 'favicon.ico' },
     ]),
@@ -83,7 +121,7 @@ module.exports = {
     ],
   },
   stats: { colors: true },
-  devtool: ENV === 'production' ? 'source-map' : 'eval-source-map',
+  devtool: IS_PROD ? 'source-map' : 'eval-source-map',
   devServer: {
     port: process.env.PORT || 8080,
     host: 'localhost',

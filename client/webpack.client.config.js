@@ -1,39 +1,28 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
-const PostCompile = require('post-compile-webpack-plugin');
 const path = require('path');
-const rimraf = require('rimraf');
 const pkg = require('./package.json');
 
 const ENV = process.env.NODE_ENV || 'development';
-const BUILD_TYPE = process.env.BUILD_TYPE || 'client';
-const IS_SERVER = BUILD_TYPE === 'server';
 const VERSION = `v${pkg.version}`;
 
 const SOURCE_DIR = path.resolve(__dirname, 'src');
 const OUTPUT_DIR = path.resolve(__dirname, 'build');
-const SERVER_DIR = path.join(OUTPUT_DIR, VERSION, 'server');
 const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 module.exports = {
   mode: ENV,
   context: SOURCE_DIR,
-  entry: IS_SERVER ? {
-    server: './app/index.js',
-  } : {
+  entry: {
     client: './index.js',
   },
   output: {
-    path: IS_SERVER ?
-      SERVER_DIR
-      :
-      CLIENT_DIR,
+    path: CLIENT_DIR,
     filename: 'assets/[name].[hash:8].js',
-    libraryTarget: IS_SERVER ? 'commonjs2' : 'umd',
+    libraryTarget: 'umd',
   },
-  optimization: IS_SERVER ? {} : {
+  optimization: {
     splitChunks: {
       cacheGroups: {
         commons: {
@@ -50,9 +39,6 @@ module.exports = {
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
-        options: {
-          plugins: IS_SERVER ? ['dynamic-import-webpack', 'remove-webpack'] : [],
-        },
       },
     }, {
       test: /\.scss$/,
@@ -79,18 +65,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
-      'process.env.BUILD_TYPE': JSON.stringify(BUILD_TYPE),
-      'process.env.IS_SERVER': JSON.stringify(IS_SERVER),
     }),
-    new ManifestPlugin(),
-  ].concat(!IS_SERVER ? [] : [
-  // Server-only plugins
-    new PostCompile(() => {
-      rimraf.sync(path.join(SERVER_DIR, 'assets', 'css'));
-      rimraf.sync(path.join(SERVER_DIR, 'assets', 'images'));
-    }),
-  // Client-only plugins
-  ]).concat(IS_SERVER ? [] : [
     new CopyWebpackPlugin([
       { from: 'favicon.ico' },
     ]),
@@ -99,7 +74,7 @@ module.exports = {
       filename: './index.html',
       template: './index.ejs',
     }),
-  ]),
+  ],
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss'],
     modules: [

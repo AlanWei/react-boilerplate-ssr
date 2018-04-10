@@ -19,15 +19,12 @@ const CLIENT_DIR = path.join(OUTPUT_DIR, VERSION);
 
 module.exports = {
   mode: ENV,
-
   context: SOURCE_DIR,
-
   entry: IS_SERVER ? {
     server: './app/index.js',
   } : {
     client: './index.js',
   },
-
   output: {
     path: IS_SERVER ?
       SERVER_DIR
@@ -36,7 +33,17 @@ module.exports = {
     filename: 'assets/[name].[hash:8].js',
     libraryTarget: IS_SERVER ? 'commonjs2' : 'umd',
   },
-
+  optimization: IS_SERVER ? {} : {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   module: {
     rules: [{
       test: /\.(jsx|js)$/,
@@ -68,7 +75,6 @@ module.exports = {
       },
     }],
   },
-
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -94,15 +100,6 @@ module.exports = {
       template: './index.ejs',
     }),
   ]),
-
-  optimization: {
-    namedModules: true,
-    splitChunks: {
-      name: 'vendor',
-      minChunks: 2,
-    },
-  },
-
   resolve: {
     extensions: ['.jsx', '.js', '.json', '.scss'],
     modules: [
@@ -110,7 +107,6 @@ module.exports = {
       'node_modules',
     ],
   },
-
   stats: { colors: true },
   devtool: ENV === 'production' ? 'source-map' : 'eval-source-map',
   devServer: {

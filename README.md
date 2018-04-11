@@ -31,13 +31,13 @@ Navigate to `http://localhost:3000`
 ---
 
 # CHANGLOG
-
+### 2018.04.11
+1. Upgrade to Webpack 4.
+2. Temporarily remove `react-loadable` for easy SSR.
+### 2018.02.07
+1. Better webpack configuration.
 ### 2018.02.05
 1. Update dependencies for both client & server side.
 2. Add server side eslint check.
 3. Add server side XSS protection.
-
-### 2018.02.07
-1. Add server side DDOS protection.
-2. Better webpack configuration.
 > For pure client side version, please visit [react-boilerplate](https://github.com/AlanWei/react-boilerplate)

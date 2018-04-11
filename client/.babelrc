@@ -1,7 +1,7 @@
 {
   "sourceMaps": true,
   "presets": [
-    ["es2015", { "modules": false }],
+    "env",
     "react"
   ],
   "plugins": [
@@ -12,18 +12,5 @@
     ["module-resolver", {
       "root": ["./src"]
     }]
-  ],
-  "env": {
-    "production": {
-      "sourceMaps": false
-    },
-    "test": {
-      "presets": [
-        "es2015"
-      ],
-      "plugins": [
-        "dynamic-import-webpack"
-      ]
-    }
-  }
+  ]
 }

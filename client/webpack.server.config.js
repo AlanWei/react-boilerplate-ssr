@@ -1,8 +1,6 @@
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const PostCompile = require('post-compile-webpack-plugin');
 const path = require('path');
-const rimraf = require('rimraf');
 const pkg = require('./package.json');
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -41,10 +39,6 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(ENV),
     }),
     new ManifestPlugin(),
-    new PostCompile(() => {
-      rimraf.sync(path.join(SERVER_DIR, 'assets', 'css'));
-      rimraf.sync(path.join(SERVER_DIR, 'assets', 'images'));
-    }),
   ],
   resolve: {
     extensions: ['.jsx', '.js', '.json'],

@@ -1,6 +1,8 @@
-const webpack = require('webpack');
-const ManifestPlugin = require('webpack-manifest-plugin');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const PostCompile = require('post-compile-webpack-plugin');
+const rimraf = require('rimraf');
 const pkg = require('./package.json');
 
 const ENV = process.env.NODE_ENV || 'development';
@@ -12,6 +14,7 @@ const SERVER_DIR = path.join(OUTPUT_DIR, VERSION, 'server');
 
 module.exports = {
   mode: ENV,
+  target: 'node',
   context: SOURCE_DIR,
   entry: {
     server: './app/index.js',
@@ -31,22 +34,41 @@ module.exports = {
           plugins: ['dynamic-import-webpack', 'remove-webpack'],
         },
       },
+    }, {
+      test: /\.scss$/,
+      exclude: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+        'sass-loader',
+      ],
+    }, {
+      test: /\.css$/,
+      include: /node_modules/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        'css-loader',
+      ],
+    }, {
+      test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+      use: {
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash:8].[ext]',
+          outputPath: 'assets/images/',
+        },
+      },
     }],
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(ENV),
+    new MiniCssExtractPlugin({
+      filename: 'assets/css/style.[hash:8].css',
     }),
     new ManifestPlugin(),
+    new PostCompile(() => {
+      rimraf.sync(path.join(SERVER_DIR, 'assets', 'css'));
+      rimraf.sync(path.join(SERVER_DIR, 'assets', 'images'));
+    }),
   ],
-  resolve: {
-    extensions: ['.jsx', '.js', '.json'],
-    modules: [
-      SOURCE_DIR,
-      'node_modules',
-    ],
-  },
-  stats: { colors: true },
   devtool: ENV === 'production' ? 'source-map' : 'eval-source-map',
 };

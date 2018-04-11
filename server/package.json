@@ -11,7 +11,6 @@
   "license": "MIT",
   "dependencies": {
     "cookie-parser": "^1.4.3",
-    "ddos": "^0.1.28",
     "dns-prefetch-control": "^0.1.0",
     "dont-sniff-mimetype": "^1.0.0",
     "express": "^4.16.3",

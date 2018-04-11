@@ -30,9 +30,6 @@ module.exports = {
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
-        options: {
-          plugins: ['dynamic-import-webpack', 'remove-webpack'],
-        },
       },
     }, {
       test: /\.scss$/,

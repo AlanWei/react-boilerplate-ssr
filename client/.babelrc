@@ -5,10 +5,8 @@
     "react"
   ],
   "plugins": [
-    "syntax-dynamic-import",
     "transform-class-properties",
     "transform-object-rest-spread",
-    "dynamic-import-webpack",
     ["module-resolver", {
       "root": ["./src"]
     }]

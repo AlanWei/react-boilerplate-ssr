@@ -1,6 +1,5 @@
 const express = require('express');
 const morgan = require('morgan');
-const Ddos = require('ddos');
 const cookieParser = require('cookie-parser');
 const dnsPrefetchControl = require('dns-prefetch-control');
 const hidePoweredBy = require('hide-powered-by');
@@ -17,10 +16,6 @@ const IS_PROD = ENV === 'production';
 
 const app = express();
 
-// app.use(new Ddos({
-//   burst:10,
-//   limit:15,
-// }).express);
 app.use(dnsPrefetchControl({
   allow: false,
 }));

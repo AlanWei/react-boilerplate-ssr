@@ -1,10 +1,9 @@
 import createAsyncAction from 'utils/createAsyncAction';
+import api from 'utils/api';
 
 function getMessage() {
   return createAsyncAction('HOME_GET_MESSAGE', () => (
-    Promise.resolve({
-      data: 'React is awesome!',
-    })
+    api.get('/message')
   ));
 }
 

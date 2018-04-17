@@ -1,4 +1,5 @@
 import axios from 'axios';
+import buildEnv from './buildEnv';
 
 const defaultHeader = {
   Accept: 'application/json',
@@ -12,6 +13,8 @@ const instance = axios.create({
 });
 
 const returnJson = response => response.data;
+
+const buildUrl = url => `${buildEnv.apiHost}${url}`;
 
 const standardResponse = (response) => {
   if (response.status < 400) {
@@ -34,13 +37,15 @@ const api = () => {
     },
 
     get: (url, query) => (
-      opt.instance.get(url, {
+      opt.instance.get(buildUrl(url), {
         params: query,
-      }).then(standardResponse)
+      })
+        .then(standardResponse)
     ),
 
     post: (url, data) => (
-      opt.instance.post(url, data).then(standardResponse)
+      opt.instance.post(buildUrl(url), data)
+        .then(standardResponse)
     ),
   };
 };

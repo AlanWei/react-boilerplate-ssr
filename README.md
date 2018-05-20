@@ -31,6 +31,8 @@ Navigate to `http://localhost:3000`
 ---
 
 # CHANGLOG
+### 2018.05.20
+1. Better `client/src/app` folder structure.
 ### 2018.04.11
 1. Upgrade to Webpack 4.
 2. Temporarily remove `react-loadable` for easy SSR.

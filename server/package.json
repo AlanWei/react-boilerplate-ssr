@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.5",
+    "babel-eslint": "^8.2.6",
     "babel-preset-env": "^1.7.0",
     "babel-watch": "^2.0.7",
     "cross-env": "^5.2.0",
-    "eslint": "^5.0.1",
+    "eslint": "^5.1.0",
     "eslint-plugin-node": "^6.0.1"
   }
 }

@@ -4,7 +4,7 @@
   "description": "SSR services with React 16.0",
   "main": "index.js",
   "scripts": {
-    "watch": "CLIENT_VERSION=v1.0.0 babel-watch src/index.js",
+    "watch": "CLIENT_VERSION=v1.0.0 babel-node src/index.js",
     "lint": "eslint src"
   },
   "author": "Alan Wei",
@@ -20,8 +20,8 @@
     "ienoopen": "^1.0.0",
     "lodash": "^4.17.10",
     "morgan": "^1.9.0",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-helmet": "^5.2.0",
     "react-router": "^4.3.1",
     "react-router-config": "^1.0.0-beta.4",
@@ -29,12 +29,12 @@
     "x-xss-protection": "^1.1.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.6",
-    "babel-preset-env": "^1.7.0",
-    "babel-watch": "^2.0.7",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-eslint": "^9.0.0",
     "cross-env": "^5.2.0",
-    "eslint": "^5.1.0",
-    "eslint-plugin-node": "^6.0.1"
+    "eslint": "^5.5.0",
+    "eslint-plugin-node": "^7.0.1"
   }
 }
